@@ -1,3 +1,5 @@
+/* Single Register Swap Instructions */
+/* Handout page 69-71/112 chapter 3 ARM assembly language programming */
 /* data section */
 	.data
 	.align 4

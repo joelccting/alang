@@ -1,4 +1,4 @@
-/* Exercise on multiple register load and store instructions */
+/* Exercise on Multiple Register Load and Store Instructions */
 	.data
 	.align 4
 
@@ -35,12 +35,25 @@ main:
 				@r4 := mem32[r1 + 8]
 				@r5 := mem32[r1 + 12]
 
+	mvn r2, r2	
+	mvn r3, r3
+	mvn r4, r4
+	mvn r5, r5
+	stmia r1, {r2, r3, r4, r5}
+
 	adr r1, data
 	ldr r1, [r1]
 	ldm r1, {r2, r3, r4, r5} @r2 := mem32[r1]
 				@r3 := mem32[r1 + 4]
 				@r4 := mem32[r1 + 8]
 				@r5 := mem32[r1 + 12]
+	
+	ldr r1, data
+	ldmia r1, {r3, r4} @r2 := mem32[r1]
+	
+	ldr r1, data
+	ldmia r1!, {r3, r4} @r3 := mem32[r1]
+	
 	mvn r2, r2		@r2 := ~r2
 	mvn r3, r3
 	mvn r4, r4
@@ -54,5 +67,17 @@ main:
 	mvn r5, r5
 	ldr r1, data
 	stmia r1!, {r2, r3, r4, r5}
+
+	ldr r1, data
+	ldmib r1!, {r2, r3, r4}
+
+	ldr r1, data
+	add r1, r1, #8
+	ldmda r1!, {r2, r3, r4}
+
+	ldr r1, data
+	add r1, r1, #8
+	ldmdb r1!, {r2, r3, r4}
+	
 	nop
 	.end

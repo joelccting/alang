@@ -23,6 +23,7 @@ vars:
 	.word B
 	.word C
 main:
+	/* post-indexed addressing mode */
 	ldr r1, vars		@r1 := mem32[vars]
 	ldr r2, [r1], #4	@r2 := mem32[r1]
 				@r1 := r1 + 4
@@ -30,5 +31,21 @@ main:
 				@r1 := r1 + 4
 	add r0, r2, r3		@r0 := r2 + r3
 	str r0, [r1]		@mem32[r1] = r0
+
+	/* auto-indexing address mode, pre-index with writeback */
+	ldr r1, vars		@r1 := mem32[vars]
+	ldr r2, [r1, #4]!	@r2 := mem32[r1 + 4]
+				@r1 := r1 + 4
+	ldr r3, [r1, #4]!	@r3 := mem32[r1 + 4]
+				@r1 := r1 + 4
+	add r0, r2, r3		@r0 := r2 + r3
+	str r0, [r1]		@mem32[r1] = r0
+
+	/* pre-indexed addressing mode */
+	ldr r1, vars
+	ldr r2, [r1, #4]
+	ldr r3, [r1, #8]
+	add r0, r2, r3
+	str r0, [r1]	
 	nop
 	.end
